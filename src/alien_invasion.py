@@ -44,26 +44,31 @@ class AlienInvasion:
         # # Set background color
         # self.bg_color = (230, 230, 230)
         #     # RGB tuple
+        # create a ship
         self.ship = Ship(self)
 
+        # create a sprite group of bullets
         # hold all the currently fired bullets in a sprite group
         self.bullets = pygame.sprite.Group()  # type: pygame.sprite.Group
 
     def run_game(self):
         """Start the main loop for the game"""
+        # main event loop:
         while True:
             self._check_events()  # update the game based on any new user inputs
             self.ship.update()  # update ship position based on any flag updates from _check_events()
-            self.bullets.update()  # Group automatically calls update for every bullet (sprite) in the group
-            self._remove_unnecessary_bullets()
-            print(len(self.bullets))
+            self._update_bullets()
             self._update_screen()  # update the screen with the new changes
 
-    def _remove_unnecessary_bullets(self):
+    def _update_bullets(self):
+        # update existing bullet positions
+        self.bullets.update()  # update bullets' positions. Group automatically calls update() for every bullet (sprite) in the group
+
+        # remove unnecessary bullets:
         # create a copy so that we can remove from the group as we iterate through it
-        current_bullets : list[Bullet] = self.bullets.copy()
-        for bullet in current_bullets :
-            # if bullet is at the top, remove it from the group
+        current_bullets: list[Bullet] = self.bullets.copy()  # type: ignore
+        for bullet in current_bullets:
+            # if bullet is off the top of the screen (its bottom is at y=0), remove it from the group
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
@@ -75,6 +80,7 @@ class AlienInvasion:
         for event in pygame.event.get():  # << this function returns a list of events since the last time it was called
             # an 'event' is an action the user performs while playing the game (kb and mouse inputs)
             # this "event loop" listens for events and performs appropriate tasks
+
             # QUIT EVENT
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -84,6 +90,7 @@ class AlienInvasion:
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
 
+            # KEYUP EVENTS
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
 
@@ -118,20 +125,23 @@ class AlienInvasion:
         # on each loop set the color of a surface by useing the .fill(color) method
         # specificy color as an RGB tuple
 
-        self.ship.blitme()
         # set the ship in its place
+        self.ship.blitme()
 
         # manually draw each bullet in the group attribute
-        current_bullets: list[Bullet] = self.bullets.sprites()
+        # returns a list of bullets
+        current_bullets: list[Bullet] = self.bullets.sprites()  # type: ignore
         for bullet in current_bullets:
             bullet.draw_bullet()
-        pygame.display.flip()
+
         # this function just updates the screen on every run of the while loop, so any updates to game elements are shown
+        pygame.display.flip()
 
     def _fire_bullet(self):
-        # Create new bullet, and add it to the group attribute
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        # Create new bullet, and add it to the group attribute IF the currently existing bullets is < # allowed
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
 
 
 if __name__ == "__main__":

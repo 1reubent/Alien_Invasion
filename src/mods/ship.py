@@ -41,7 +41,7 @@ class Ship:
         self.moving_right = False
         self.moving_left = False
 
-    def blitme(self):
+    def blitme(self):  # draw the ship to the screen
         self.screen.blit(self.image, self.rect)
         # blit() draws a surface to the screen. it takes the surface and it's rect
 
@@ -53,8 +53,8 @@ class Ship:
             self.x += self.settings.ship_speed
 
         if self.moving_left and self.rect.left > 0:
-                # if its elif, then you cant press < and > at the same time 
-            # check to make sure the left of the ship is not passed the screen 
+            # if its elif, then you cant press < and > at the same time
+            # check to make sure the left of the ship is not passed the screen
             self.x -= self.settings.ship_speed
 
         # Update rect with new value. It will be rounded but thats ok
