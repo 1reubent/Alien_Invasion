@@ -63,7 +63,7 @@ class AlienInvasion:
             self._check_events()  # update the game based on any new user inputs
             self.ship.update()  # update ship position based on any flag updates from _check_events()
             self._update_bullets()
-            self._update_aliens
+            self._update_aliens()
             self._update_screen()  # update the screen with the new changes
 
     def _update_bullets(self):
@@ -80,7 +80,24 @@ class AlienInvasion:
 
     def _update_aliens(self):
         """Update the positions of all aliens in the fleet"""
+        self._check_fleet_edges()
         self.aliens.update()
+
+    def _check_fleet_edges(self):
+        """Change fleet direction if any alien has hit an edge"""
+        current_aliens: list[Alien] = self.aliens.sprites()  # type: ignore
+        for alien in current_aliens:
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        """Drop the entire fleet and change the fleet's direction"""
+        current_aliens: list[Alien] = self.aliens.sprites()  # type: ignore
+        for alien in current_aliens:
+            alien.rect.y += self.settings.fleet_drop_speed
+
+        self.settings.fleet_direction *= -1
 
     def _check_events(self):
         # a single leading underscore indicates a helper method in a class.
@@ -169,6 +186,9 @@ class AlienInvasion:
         # on each loop set the color of a surface by useing the .fill(color) method
         # specificy color as an RGB tuple
 
+        # draw sign
+        self._create_sign()
+
         # set the ship in its place
         self.ship.blitme()
 
@@ -180,11 +200,6 @@ class AlienInvasion:
 
         # draw aliens. draw() draws each element of the group at the position defined by its rect
         self.aliens.draw(self.screen)
-        # current_aliens: list[Alien] = self.aliens.sprites()  # type: ignore
-        # for alien in current_aliens:
-        #     alien.screen.blit(alien.image, alien.rect)
-
-        # draw sign
 
         # this function just updates the screen on every run of the while loop, so any updates to game elements are shown
         pygame.display.flip()
@@ -194,6 +209,68 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+
+    def _create_sign(self):
+        # SIGN 1
+
+        # create brown plank rect, rotate
+        # load image, rotate and move to bottom
+        plank_image = pygame.image.load(
+            "images/plank.bmp",
+        )
+        plank_size = (plank_image.get_width() // 8, plank_image.get_height() // 8)
+        plank_image = pygame.transform.scale(plank_image, plank_size)
+        plank_rect = plank_image.get_rect()
+
+        # TODO: rotate plank
+        plank_image = pygame.transform.rotate(plank_image, 75)
+
+        # TODO: move plank
+        plank_rect.midbottom = self.screen.get_rect().midbottom
+        plank_rect.x += 375
+        plank_rect.y -= 65
+        self.screen.blit(plank_image, plank_rect)
+
+        # TODO: create sign (load, rotate, move)
+        sign_image = pygame.image.load("images/sign.bmp")
+        sign_size = (sign_image.get_width() // 10, sign_image.get_height() // 10)
+        sign_image = pygame.transform.scale(sign_image, sign_size)
+        sign_rect = sign_image.get_rect()
+
+        sign_image = pygame.transform.rotate(sign_image, -15)
+
+        sign_rect.midbottom = self.screen.get_rect().midbottom
+        sign_rect.x += 360
+        sign_rect.y -= 90
+        self.screen.blit(sign_image, sign_rect)
+
+        # SIGN 2
+        plank_image2 = pygame.image.load(
+            "images/plank.bmp",
+        )
+        plank_size2 = (plank_image2.get_width() // 8, plank_image2.get_height() // 8)
+        plank_image2 = pygame.transform.scale(plank_image2, plank_size2)
+        plank_rect2 = plank_image2.get_rect()
+
+        plank_image2 = pygame.transform.rotate(plank_image2, -75)
+
+        plank_rect2.midbottom = self.screen.get_rect().midbottom
+        plank_rect2.x -= 375
+        plank_rect2.y -= 65
+        self.screen.blit(plank_image2, plank_rect2)
+
+        # create sign
+        sign_image2 = pygame.image.load("images/sign2.bmp")
+        sign_size2 = (sign_image2.get_width() // 9, sign_image2.get_height() // 9)
+        sign_image2 = pygame.transform.scale(sign_image2, sign_size2)
+        sign_rect2 = sign_image2.get_rect()
+
+        sign_image2 = pygame.transform.rotate(sign_image2, 15)
+
+        sign_rect2.midbottom = self.screen.get_rect().midbottom
+        sign_rect2.x -= 435
+        sign_rect2.y -= 115
+        self.screen.blit(sign_image2, sign_rect2)
 
 
 if __name__ == "__main__":
