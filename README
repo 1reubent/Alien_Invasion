@@ -2,3 +2,7 @@ player moves a rocket ship at the bottom center of the screen left and right
 spacebar to shoot bullets
 aliens appear in fleets. each fleet moves faster than the previous one
 if an alien reaches the bottom or touches the ship, player loses a 'ship'. Lose three ships and gg
+
+to run
+    - cd src
+    - python3 alien_invasion

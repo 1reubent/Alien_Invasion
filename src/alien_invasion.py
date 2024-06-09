@@ -1,17 +1,17 @@
 import pygame
 import sys
-
 # ^used to exit the game when we're finished
 
 from mods.ship import Ship
-
 # class that holds the ship information
+
 from mods.settings import Settings
 # class that holds game settings
 
 from mods.bullet import Bullet
+from mods.alien import Alien
 
-FULLSCREEN = True
+FULLSCREEN = False
 
 
 class AlienInvasion:
@@ -51,6 +51,11 @@ class AlienInvasion:
         # hold all the currently fired bullets in a sprite group
         self.bullets = pygame.sprite.Group()  # type: pygame.sprite.Group
 
+        self.aliens = pygame.sprite.Group()  # type: pygame.sprite.Group
+
+        # create initial fleet of aliens
+        self._create_fleet()
+
     def run_game(self):
         """Start the main loop for the game"""
         # main event loop:
@@ -58,6 +63,7 @@ class AlienInvasion:
             self._check_events()  # update the game based on any new user inputs
             self.ship.update()  # update ship position based on any flag updates from _check_events()
             self._update_bullets()
+            self._update_aliens
             self._update_screen()  # update the screen with the new changes
 
     def _update_bullets(self):
@@ -71,6 +77,10 @@ class AlienInvasion:
             # if bullet is off the top of the screen (its bottom is at y=0), remove it from the group
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+
+    def _update_aliens(self):
+        """Update the positions of all aliens in the fleet"""
+        self.aliens.update()
 
     def _check_events(self):
         # a single leading underscore indicates a helper method in a class.
@@ -119,6 +129,40 @@ class AlienInvasion:
         if event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
+    def _create_fleet(self):
+        """Create a fleet of aliens"""
+        # create alien to use as reference to make calculatons (not added to fleet)
+        alien = Alien(self)
+        (alien_width, alien_height) = alien.rect.size
+
+        # calculate the number of aliens in a row
+        available_space_x = self.settings.screen_width - (
+            2 * alien_width
+        )  # 1 alien width margin on both sides
+        num_aliens_x = available_space_x // (
+            2 * alien_width  #            ^floor division or int division
+        )  # 1 alien width gap between aliens
+
+        # calculate the number of rows
+        available_space_y = (
+            self.settings.screen_height - 3 * alien_height - self.ship.rect.height
+        )  # 1 alien_height margin at the top, ship_height + 2 * alien_height at the bottom
+        num_rows = available_space_y // (2 * alien_height)
+        # 1 extra alien height gap between rows
+        for row_num in range(num_rows):
+            for alien_num in range(num_aliens_x):
+                self._create_alien(alien_num, row_num)
+
+    def _create_alien(self, alien_num, row_num):
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        alien.set_x(
+            alien_width + alien_num * (2 * alien_width)
+        )  # margin + alien_num*(2 * alien_width)
+
+        alien.set_y(alien_height + row_num * (2 * alien_height))
+        self.aliens.add(alien)
+
     def _update_screen(self):
         """update screen color, ship location, and flip to new screen"""
         self.screen.fill(self.settings.bg_color)
@@ -133,6 +177,14 @@ class AlienInvasion:
         current_bullets: list[Bullet] = self.bullets.sprites()  # type: ignore
         for bullet in current_bullets:
             bullet.draw_bullet()
+
+        # draw aliens. draw() draws each element of the group at the position defined by its rect
+        self.aliens.draw(self.screen)
+        # current_aliens: list[Alien] = self.aliens.sprites()  # type: ignore
+        # for alien in current_aliens:
+        #     alien.screen.blit(alien.image, alien.rect)
+
+        # draw sign
 
         # this function just updates the screen on every run of the while loop, so any updates to game elements are shown
         pygame.display.flip()
