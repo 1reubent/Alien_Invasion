@@ -18,8 +18,8 @@ from mods.bullet import Bullet
 from mods.alien import Alien
 from mods.button import Button
 
-FULLSCREEN = True
-DEBUG = True
+FULLSCREEN = False
+DEBUG = False
 FILENAME = "highscore.json"
 
 
