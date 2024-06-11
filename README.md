@@ -48,7 +48,7 @@ In Alien Invasion, your objective is to shoot down all the alien invaders before
 
 ## Controls
 - __Return__ or __Click play button:__ Start the game.
-- __Arrow Keys__ or __WASD:__ Move the spaceship left and right.
+- __Arrow Keys__ or __WASD:__ Move the spaceship left, right, up or down.
 - __Spacebar:__ Shoot bullets.
 - __P Key:__ Pause the game.
 - __Q Key:__ Quit the game.
@@ -87,7 +87,7 @@ alien_invasion_game/
 ## Modifying Game Settings
 
 ### Optimization
-If the game runs to fast/slow, or if you just want to mess with the settings, navigate to the `settings.py` file where you can modify severl settings. Some key settings include:
+If the game runs to fast/slow, or if you just want to mess with the settings, navigate to the `mods/settings.py` file where you can modify several settings. Some key settings include:
 - __Ship Speed:__ Controls how fast the player's ship moves.
 
     `self.ship_speed = 1.5`
@@ -114,10 +114,10 @@ If the game runs to fast/slow, or if you just want to mess with the settings, na
 You can also change whether the game runs in fullscreen or windowed mode by navigating to `alien_invasion.py` and modifying the `FULLSCREEN` macro near the top to either `True` or `False`.
 
 ### Resetting High Score
-To reset the highscore, just delete `highscore.json` that should be created in `alien_invasion/` after you play the game for the first time.
+To reset the highscore, just delete `highscore.json` which is created in `alien_invasion/` after you play the game for the first time.
 
 ## Credits
-Alien Invasion was developed by Reuben Thomas. The game was inspired by the classic Space Invaders arcade game. Special thanks to the contributors of the Pygame library for making game development in Python accessible and fun.
+Alien Invasion was developed by myself inspired by the example in the book Python Crash Course by Eric Matthes.
 
 Enjoy defending Earth from the alien invasion!
 
