@@ -71,7 +71,7 @@ alien_invasion_game/
 ├── alien_invasion.py
 ├── dependencies.txt
 └── README.md
-
+```
 - alien_invasion.py: The main module to run the game.
 - alien.py: Defines the alien class.
 - bullet.py: Defines the bullet class.
