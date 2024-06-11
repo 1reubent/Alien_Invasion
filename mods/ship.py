@@ -38,10 +38,13 @@ class Ship(Sprite):
         self.x = float(self.rect.x)
         # rect can only hold integer values. To appropriately update the ships position we need a float
         # rect.x is the x coordinate of the ships top left corner
+        self.y = float(self.rect.y)
 
         # These are the movement flags to help enable continuous movement
         self.moving_right = False
         self.moving_left = False
+        self.moving_up = False
+        self.moving_down = False
 
     def blitme(self):  # draw the ship to the screen
         self.screen.blit(self.image, self.rect)
@@ -62,6 +65,14 @@ class Ship(Sprite):
         # Update rect with new value. It will be rounded but thats ok
         self.rect.x = self.x
 
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
+            self.y += 1
+        if self.moving_up and self.rect.top > 0:
+            self.y -= 1
+            
+        self.rect.y = self.y
+
     def center_ship(self):
         self.rect.midbottom = self.screen_rect.midbottom
         self.x = float(self.rect.x)
+        self.y = float(self.rect.y)

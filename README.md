@@ -26,7 +26,6 @@ Alien Invasion is a classic arcade-style game inspired by the Space Invaders. Th
 ## Requirements
 - Python 3.6 or higher
 - Pygame library, version 2.5.2
-- ```dependencies.txt```
 
 ## Installation
 1. __Clone the Repository:__
@@ -49,7 +48,7 @@ In Alien Invasion, your objective is to shoot down all the alien invaders before
 
 ## Controls
 - __Return__ or __Click play button:__ Start the game.
-- __Arrow Keys:__ Move the spaceship left and right.
+- __Arrow Keys__ or __WASD:__ Move the spaceship left and right.
 - __Spacebar:__ Shoot bullets.
 - __P Key:__ Pause the game.
 - __Q Key:__ Quit the game.

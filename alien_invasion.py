@@ -149,13 +149,16 @@ class AlienInvasion:
             self.stats.game_paused = False
 
     def _check_keydown_events(self, event):
-        if event.key == pygame.K_RIGHT:
+        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
             self.ship.moving_right = True
             # set the moving right flag so that in run_game(), the ship will be continuously moved right
-        elif event.key == pygame.K_LEFT:
+        elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
             # can use 'elif' because each key press is an independent event
             self.ship.moving_left = True
-
+        elif event.key == pygame.K_UP or event.key == pygame.K_w:
+            self.ship.moving_up = True
+        elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+            self.ship.moving_down = True
         # check if user fired a bullet
 
         elif self.stats.game_active and event.key == pygame.K_SPACE:
@@ -177,11 +180,15 @@ class AlienInvasion:
             pygame.mouse.set_visible(True)
 
     def _check_keyup_events(self, event):
-        if event.key == pygame.K_RIGHT:
+        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
             self.ship.moving_right = False
             # reset the moving_right flag, so that it stops moving right
-        if event.key == pygame.K_LEFT:
+        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
             self.ship.moving_left = False
+        elif event.key == pygame.K_UP or event.key == pygame.K_w:
+            self.ship.moving_up = False
+        elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+            self.ship.moving_down = False
 
     def _update_bullets(self):
         # update existing bullet positions
@@ -215,6 +222,7 @@ class AlienInvasion:
         if not self.aliens:
             self._update_screen()  # get frame of the last hit
             self.bullets.empty()
+            self.ship.center_ship()
             self._create_fleet()
             self.settings.increase_speed()  # make game harder
 
