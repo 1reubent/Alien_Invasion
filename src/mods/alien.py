@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 # import TYPE_CHECKING constant, which allows for conditional imports that only execute for type checking, not at runtime
 
 if TYPE_CHECKING:
-    from alien_invasion import AlienInvasion  # type: ignore
+    from alien_invasion import AlienInvasion 
     # prevents alieninvasion from being imported at runtime. only for type checking in VS code
 
 
@@ -18,10 +18,10 @@ class Alien(Sprite):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         # set image
-        self.image = pygame.image.load("images/alien.bmp")
+        self.image = pygame.image.load("images/alien.png")
         # resize image
-        alien_size = (self.image.get_width() // 16, self.image.get_height() // 16)
-        self.image = pygame.transform.scale(self.image, alien_size)
+        # alien_size = (self.image.get_width() // 16, self.image.get_height() // 16)
+        # self.image = pygame.transform.scale(self.image, alien_size)
         # get rect
         self.rect = self.image.get_rect()
 

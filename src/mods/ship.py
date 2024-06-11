@@ -1,17 +1,19 @@
 from __future__ import annotations  # enables forward declaratoin for type hints
 import pygame
+from pygame.sprite import Sprite
 from typing import TYPE_CHECKING
 # import TYPE_CHECKING constant, which allows for conditional imports that only execute for type checking, not at runtime
 
 if TYPE_CHECKING:
-    from alien_invasion import AlienInvasion  # type: ignore
+    from alien_invasion import AlienInvasion
     # prevents alieninvasion from being imported at runtime. only for type checking in VS code
 
 
-class Ship:
+class Ship(Sprite):
     """class to manage the ship in Alien invasion"""
 
     def __init__(self, ai_game: AlienInvasion) -> None:
+        super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         # everything in pygame is a 'rectangle'.
@@ -59,3 +61,7 @@ class Ship:
 
         # Update rect with new value. It will be rounded but thats ok
         self.rect.x = self.x
+
+    def center_ship(self):
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)

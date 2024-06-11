@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 # import TYPE_CHECKING constant, which allows for conditional imports that only execute for type checking, not at runtime
 
 if TYPE_CHECKING:
-    from alien_invasion import AlienInvasion  # type: ignore
+    from alien_invasion import AlienInvasion
     # prevents alieninvasion from being imported at runtime. only for type checking in VS code
 
 
