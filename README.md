@@ -47,7 +47,7 @@ Alien Invasion is a classic arcade-style game inspired by the Space Invaders. Th
 In Alien Invasion, your objective is to shoot down all the alien invaders before they reach the bottom of the screen or hit the ship. As you progress through the levels, the aliens will move faster, and the game will become more challenging.
 
 ## Controls
-- __Return__ or __Click play button:__ Start the game.
+- __Return__ or __Click play button:__ Start or resume the game.
 - __Arrow Keys__ or __WASD:__ Move the spaceship left, right, up or down.
 - __Spacebar:__ Shoot bullets.
 - __P Key:__ Pause the game.
