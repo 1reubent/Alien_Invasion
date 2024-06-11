@@ -16,7 +16,7 @@
 - [Credits](#credits)
 
 ## Introduction
-Alien Invasion is a classic arcade-style game inspired by the Space Invaders. The player controls a spaceship and must defend Earth from waves of descending aliens. The game is written in Python using the Pygame library, offering an exciting retro gaming experience.
+Alien Invasion is a classic arcade-style game inspired by Space Invaders. The player controls a spaceship and must defend Earth from waves of descending aliens. The game is written in Python using the Pygame library, offering an exciting retro gaming experience.
 
 ## Features
 - Classic Space Invaders gameplay
@@ -88,7 +88,7 @@ alien_invasion_game/
 ## Modifying Game Settings
 
 ### Optimization
-If the game runs to fast/slow, or if you just want to mess with the settings, navigate to the `mods/settings.py` file where you can modify several settings. Some key settings include:
+If the game runs too fast/slow, or if you just want to mess with the settings, navigate to the `mods/settings.py` file where you can modify several settings. Some key settings include:
 - __Ship Speed:__ Controls how fast the player's ship moves.
 
     `self.ship_speed = 1.5`
