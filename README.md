@@ -1,4 +1,5 @@
 # Alien Invasion - README
+![Game Screenshot](https://raw.githubusercontent.com/1reubent/Alien_Invasion/master/images/game_sc.png)
 
 ## Table of Contents
 - [Introduction](#introduction)
